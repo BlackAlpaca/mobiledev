@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "371551824552",
+    "firebase_url": "https://mobiledevproject-3fe46.firebaseio.com",
+    "project_id": "mobiledevproject-3fe46",
+    "storage_bucket": "mobiledevproject-3fe46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371551824552:android:bca5b6d45881acfb",
+        "android_client_info": {
+          "package_name": "pxl.be.mobiledevproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371551824552-p3l0k8uq4bf844q6t4l3jkcd7gm6pe86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5ZBdG9Fc39T8edGSLjBWjEYmwByVrYu8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
