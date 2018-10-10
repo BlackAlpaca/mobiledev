@@ -17,8 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "notes_db";
-
+    private static final String DATABASE_NAME = "jarnac_db";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,16 +41,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertTraining() {
+    public long insertTraining(Training training) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
+        values.put(Training.COLUMN_TITLE, training.getTitle());
+        values.put(Training.COLUMN_LOCATION, training.getLocation());
+        values.put(Training.COLUMN_ISADULT, training.isAdult());
+        values.put(Training.COLUMN_NECESSITIES, training.getNecessities());
+        values.put(Training.COLUMN_LOCALDATETIME, training.getLocalDateTime());
 
-        //TODO
-       // values.put(Note.COLUMN_NOTE, note);
 
         // insert row
         long id = db.insert(Training.TABLE_NAME, null, values);
@@ -68,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Training.TABLE_NAME,
-                new String[]{Training.COLUMN_ID, Training.COLUMN_TITLE, Training.COLUMN_LOCALDATETIME, Training.COLUMN_NECESSITIES, Training.COLUMN_ISADULT},
+                new String[]{Training.COLUMN_ID, Training.COLUMN_TITLE, Training.COLUMN_LOCALDATETIME, Training.COLUMN_NECESSITIES, Training.COLUMN_ISADULT, Training.COLUMN_LOCATION},
                 Training.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -85,6 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getInt(cursor.getColumnIndex(Training.COLUMN_ISADULT))
                 );
 
+
         // close the db connection
         cursor.close();
 
@@ -96,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Training.TABLE_NAME + " ORDER BY " +
-                Training.COLUMN_LOCALDATETIME + " DESC";
+                Training.COLUMN_LOCALDATETIME + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

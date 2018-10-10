@@ -1,7 +1,5 @@
 package pxl.be.mobiledevproject.models;
 
-import java.time.LocalDateTime;
-
 
 public class Training {
 
@@ -13,11 +11,7 @@ public class Training {
         this.location = location;
         this.title = title;
 
-        if (isAdult == 1){
-            this.isAdult = true;
-        } else {
-            this.isAdult = false;
-        }
+        this.isAdult = isAdult == 1;
     }
 
     public static final String TABLE_NAME = "trainings";
@@ -36,10 +30,10 @@ public class Training {
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_NECESSITIES + " TEXT,"
-                    + COLUMN_LOCALDATETIME + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+                    + COLUMN_LOCALDATETIME + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
                     + COLUMN_TITLE + " TEXT,"
                     + COLUMN_LOCATION + " TEXT,"
-                    + COLUMN_ISADULT + " INTEGER,"
+                    + COLUMN_ISADULT + " INTEGER"
                     + ")";
 
 
