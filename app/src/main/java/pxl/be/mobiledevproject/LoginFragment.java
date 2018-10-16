@@ -76,8 +76,6 @@ public class LoginFragment extends Fragment {
 
         long id = databaseHelper.insertTraining(training);
 
-
-
         loginName.setText(databaseHelper.getTraining(id).getLocation());
 
         databaseHelper.close();

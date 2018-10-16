@@ -61,11 +61,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_members:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MessageFragment()).commit();
+            case R.id.nav_trainings:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, MessageFragment.newInstance(this)).commit();
                 break;
             case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, LoginFragment.newInstance((NavigationView) findViewById(R.id.nav_view), this)).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container,
+                                LoginFragment.newInstance((NavigationView) findViewById(R.id.nav_view),
+                                        this)).commit();
                 break;
             case R.id.nav_share:
                 Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
@@ -97,4 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseHelper.insertTraining(training2);
 
     }
+
+
 }
