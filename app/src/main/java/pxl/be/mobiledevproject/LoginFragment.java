@@ -1,6 +1,7 @@
 package pxl.be.mobiledevproject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,26 +27,15 @@ public class LoginFragment extends Fragment {
     EditText loginName;
 
     private Unbinder unbinder;
-    private Context context;
-    private NavigationView navigationView;
-    private DatabaseHelper databaseHelper;
-
 
     public LoginFragment() {
     }
 
 
-    public static LoginFragment newInstance(NavigationView navigationView, Context context) {
-        LoginFragment fragment = new LoginFragment();
-        fragment.setNavigationView(navigationView);
-        fragment.setContext(context);
-        return fragment;
-
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
     }
 
-    private void setContext(Context context) {
-        this.context = context;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,19 +61,11 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btnLogin)
     public void onButtonPressed() {
-        databaseHelper = new DatabaseHelper(context);
+        String name = loginName.getText().toString();
 
-        Training training = new Training(1, LocalDateTime.now().toString(), "WatMeerBenodigdheden", "Sporthal Heppen", loginName.getText().toString(), 1);
-
-        long id = databaseHelper.insertTraining(training);
-
-        loginName.setText(databaseHelper.getTraining(id).getLocation());
-
-        databaseHelper.close();
-    }
-
-
-    private void setNavigationView(NavigationView navigationView) {
-        this.navigationView = navigationView;
+        SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.username),name);
+        editor.apply();
     }
 }

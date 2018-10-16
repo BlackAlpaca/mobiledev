@@ -22,16 +22,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pxl.be.mobiledevproject.database.DatabaseHelper;
+import pxl.be.mobiledevproject.database.LoadTrainingsTask;
 import pxl.be.mobiledevproject.models.Training;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseHelper databaseHelper;
-
-    private  List<Training> trainingList;
-
     private DrawerLayout drawer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MessageFragment()).commit();
+            new LoadTrainingsTask().execute(this);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MessageFragment.newInstance(this)).commit();
             navigationView.setCheckedItem(R.id.nav_members);
         }
 
@@ -68,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container,
-                                LoginFragment.newInstance((NavigationView) findViewById(R.id.nav_view),
-                                        this)).commit();
+                                LoginFragment.newInstance()).commit();
                 break;
             case R.id.nav_share:
                 Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
@@ -88,19 +84,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    private void seedData(){
-        databaseHelper = new DatabaseHelper(this);
-
-        ButterKnife.bind(this);
-
-        Training training = new Training(1, LocalDateTime.now().toString(), "WatMeerBenodigdheden", "Sporthal Heppen", "Training 1", 1);
-        Training training2 = new Training(2, LocalDateTime.now().toString(), "dasdasdasdas", "Sporthal KAMP", "Training 2", 0);
-
-        databaseHelper.insertTraining(training);
-        databaseHelper.insertTraining(training2);
-
-    }
-
-
 }
