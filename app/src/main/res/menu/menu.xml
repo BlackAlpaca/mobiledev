@@ -12,6 +12,11 @@
             android:icon="@drawable/ic_users"
             android:title="@string/members" />
         <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_date_range_black_24dp"
+            android:title="Calendar"
+            />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />

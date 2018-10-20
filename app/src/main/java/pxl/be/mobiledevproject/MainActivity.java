@@ -69,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_share:
                 Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_calendar:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,CalendarOverview.newInstance())
+                        .commit();
         }
 
         drawer.closeDrawer(GravityCompat.START);
