@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,8 +34,11 @@ public class MessageFragment extends Fragment {
     public MessageFragment() {
     }
 
-    @BindView(R.id.textViewTrainings)
-    TextView textViewTrainings;
+    @BindView(R.id.recyclerTrainings)
+    RecyclerView recyclerView;
+
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private Unbinder unbinder;
 
@@ -53,20 +59,21 @@ public class MessageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-
         unbinder = ButterKnife.bind(this, view);
 
-        SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
-        String name = sharedPreferences.getString(getString(R.string.username), "John Doe");
-        textViewTrainings.setText("Hello " + name + "\n");
+
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
 
         databaseHelper = new DatabaseHelper(context);
+        List<Training> trainings = new ArrayList<>(databaseHelper.getAllTrainings());
 
-        for (Training t: databaseHelper.getAllTrainings()) {
-            textViewTrainings.append("\n");
-            textViewTrainings.append("Training:" + t.getTitle() + "Location: " + t.getLocation());
-        }
+        adapter = new TrainingsListAdapter(trainings);
+        recyclerView.setAdapter(adapter);
+
 
         return view;
     }
