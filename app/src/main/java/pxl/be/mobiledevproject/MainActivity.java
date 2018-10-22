@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MessageFragment.newInstance(this)).commit();
             navigationView.setCheckedItem(R.id.nav_members);
         }
-
     }
 
     @Override
@@ -75,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .beginTransaction()
                         .replace(R.id.fragment_container,CalendarOverview.newInstance())
                         .commit();
+                break;
+            case R.id.nav_accelerometer:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CalculateSpeed.newInstance()).commit();
         }
 
         drawer.closeDrawer(GravityCompat.START);
