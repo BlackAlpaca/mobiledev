@@ -3,15 +3,13 @@ package pxl.be.mobiledevproject.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class Training {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private LocalDateTime localDateTime;
+    private String localDateTime;
 
     //TODO: List<String>??
     private String necessities;
@@ -23,7 +21,7 @@ public class Training {
     private boolean isAdult;
 
     public Training(
-            LocalDateTime localDateTime,
+            String localDateTime,
             String necessities,
             String location,
             String title,
@@ -43,7 +41,7 @@ public class Training {
         return id;
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public String getLocalDateTime() {
         return localDateTime;
     }
 
