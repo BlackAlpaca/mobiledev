@@ -1,94 +1,63 @@
 package pxl.be.mobiledevproject.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
+@Entity
 public class Training {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    public Training(int id, String localDateTime, String necessities, String location, String title, int isAdult) {
-        this.id = id;
+    private String localDateTime;
+
+    //TODO: List<String>??
+    private String necessities;
+
+    private String location;
+
+    private String title;
+
+    private boolean isAdult;
+
+    public Training(
+            String localDateTime,
+            String necessities,
+            String location,
+            String title,
+            boolean isAdult) {
         this.localDateTime = localDateTime;
         this.necessities = necessities;
         this.location = location;
         this.title = title;
-
-        this.isAdult = isAdult == 1;
-    }
-
-    public static final String TABLE_NAME = "trainings";
-
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NECESSITIES = "necessities";
-    public static final String COLUMN_LOCALDATETIME = "localDateTime";
-    public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_ISADULT = "isAdult";
-    public static final String COLUMN_LOCATION = "location";
-
-
-
-    // Create table SQL query
-    public static final String CREATE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_NECESSITIES + " TEXT,"
-                    + COLUMN_LOCALDATETIME + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    + COLUMN_TITLE + " TEXT,"
-                    + COLUMN_LOCATION + " TEXT,"
-                    + COLUMN_ISADULT + " INTEGER"
-                    + ")";
-
-
-        private int id;
-        private String localDateTime;
-        private String necessities;
-        private String location;
-        private String title;
-        private boolean isAdult;
-
-    public int getId() {
-        return id;
+        this.isAdult = isAdult;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getLocalDateTime() {
-        return localDateTime;
+    public int getId() {
+        return id;
     }
 
-    public void setLocalDateTime(String localDateTime) {
-        this.localDateTime = localDateTime;
+    public String getLocalDateTime() {
+        return localDateTime;
     }
 
     public String getNecessities() {
         return necessities;
     }
 
-    public void setNecessities(String necessities) {
-        this.necessities = necessities;
-    }
-
     public String getLocation() {
         return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public boolean isAdult() {
         return isAdult;
-    }
-
-    public void setAdult(boolean adult) {
-        isAdult = adult;
     }
 }

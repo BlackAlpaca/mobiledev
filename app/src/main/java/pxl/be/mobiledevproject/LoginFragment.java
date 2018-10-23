@@ -2,8 +2,6 @@ package pxl.be.mobiledevproject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.design.widget.NavigationView;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import pxl.be.mobiledevproject.database.DatabaseHelper;
-import pxl.be.mobiledevproject.models.Training;
 
 
 public class LoginFragment extends Fragment {
