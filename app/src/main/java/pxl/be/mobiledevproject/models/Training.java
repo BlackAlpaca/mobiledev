@@ -32,6 +32,20 @@ public class Training {
         this.title = title;
         this.isAdult = isAdult;
     }
+    /*
+    public Training(int id,
+            String localDateTime,
+            String necessities,
+            String location,
+            String title,
+            boolean isAdult) {
+        this.localDateTime = localDateTime;
+        this.necessities = necessities;
+        this.location = location;
+        this.title = title;
+        this.isAdult = isAdult;
+        this.id = id;
+    }*/
 
     public void setId(int id) {
         this.id = id;

@@ -52,7 +52,6 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
@@ -103,7 +102,9 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
             maxZ = event.values[2];
         }
 
-        tvAccelerometer.setText("Max Attack Speed : " + (Math.round(maxZ * 100.0) / 100.0));
+        if (tvAccelerometer != null ){
+            tvAccelerometer.setText("Max Attack Speed : " + (Math.round(maxZ * 100.0) / 100.0));
+        }
     }
 
     @Override
