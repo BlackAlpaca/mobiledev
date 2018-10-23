@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -28,6 +29,7 @@ public class AddTrainingActivity extends AppCompatActivity {
     private EditText editTextNecessities;
     private EditText editTextLocation;
     private CalendarView calendarView;
+    private long selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,17 @@ public class AddTrainingActivity extends AppCompatActivity {
         editTextLocation = findViewById(R.id.edit_text_location);
         calendarView = findViewById(R.id.calendar_view_create);
 
+
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Add Training");
+
+        //show the selected date as a toast
+        calendarView.setOnDateChangeListener((view, year, month, day) -> {
+            Calendar c = Calendar.getInstance();
+            c.set(year, month , day);
+            selectedDate =  c.getTimeInMillis(); //this is what you want to use later
+        });
     }
 
     @Override
@@ -65,8 +76,8 @@ public class AddTrainingActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String necessities = editTextNecessities.getText().toString();
         String location = editTextLocation.getText().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy", Locale.GERMAN);
-        String date = sdf.format(new Date(calendarView.getDate()));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String date = sdf.format(new Date(selectedDate));
         
         if (title.trim().isEmpty() || necessities.trim().isEmpty() || location.trim().isEmpty()){
             Toast.makeText(this, "Please insert all fields", Toast.LENGTH_SHORT).show();
@@ -82,4 +93,6 @@ public class AddTrainingActivity extends AppCompatActivity {
         setResult(RESULT_OK, data);
         finish();
     }
+
+
 }

@@ -102,7 +102,7 @@ public class Training_management extends Fragment {
             String location = data.getStringExtra(AddTrainingActivity.EXTRA_LOCATION);
             String date = data.getStringExtra(AddTrainingActivity.EXTRA_DATE);
 
-            //TODO: IM FUCKING STUPID AND FORGET TO ADD ISADULT == HARDCODE FIX
+            //TODO: IM F***ING STUPID AND FORGET TO ADD ISADULT == HARDCODE FIX
             Training training = new Training(date, necessities, location, title, true);
             trainingViewModel.insert(training);
 
