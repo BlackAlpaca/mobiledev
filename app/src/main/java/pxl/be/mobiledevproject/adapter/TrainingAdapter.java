@@ -40,9 +40,12 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
     public void setTrainings(List<Training> trainings){
         this.trainings = trainings;
-
         //TODO: outdated
         notifyDataSetChanged();
+    }
+
+    public Training getNoteAt(int position){
+        return trainings.get(position);
     }
 
     class TrainingHolder extends RecyclerView.ViewHolder{
