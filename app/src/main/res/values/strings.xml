@@ -10,4 +10,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="communicate">Communicate</string>
     <string name="share">Share</string>
+    <string name="attack_speed">Attack Speed</string>
 </resources>

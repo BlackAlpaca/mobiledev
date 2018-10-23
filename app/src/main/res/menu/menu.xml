@@ -19,7 +19,7 @@
         <item
             android:id="@+id/nav_accelerometer"
             android:icon="@drawable/ic_accelerometer"
-            android:title="@string/settings" />
+            android:title="@string/attack_speed" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
