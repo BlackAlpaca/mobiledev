@@ -18,7 +18,9 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/School/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_save_black_24dp.xml" />
+
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/places/ic_all_inclusive_black_24dp.xml" />
+
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -31,6 +33,8 @@
                             <entry key="color" value="ffffff" />
                             <entry key="outputName" value="ic_save" />
                             <entry key="sourceFile" value="C:\Users\Bjorn" />
+                            <entry key="outputName" value="ic_accelerometer" />
+                            <entry key="sourceFile" value="C:\Users\ignac" />
                           </map>
                         </option>
                       </PersistentState>

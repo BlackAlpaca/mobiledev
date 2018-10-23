@@ -133,7 +133,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container,CalendarOverview.newInstance())
-                        .commit();*/
+                        .commit();
+                       
+                break;
+            case R.id.nav_accelerometer:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CalculateSpeed.newInstance()).commit();
+                */
         }
 
         drawer.closeDrawer(GravityCompat.START);
