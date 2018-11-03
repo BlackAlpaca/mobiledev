@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import pxl.be.mobiledevproject.adapter.TrainingAdapter;
+import pxl.be.mobiledevproject.database.RequestHandler;
 import pxl.be.mobiledevproject.database.TrainingDatabase;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
@@ -74,6 +75,8 @@ public class Training_management extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+        RequestHandler.getTrainingsData(getActivity(), getContext());
 
         FloatingActionButton buttonAddTraining = this.buttonAddTraining;
         buttonAddTraining.setOnClickListener(v -> {
@@ -116,8 +119,10 @@ public class Training_management extends Fragment {
             String date = data.getStringExtra(AddTrainingActivity.EXTRA_DATE);
 
             //TODO: IM F***ING STUPID AND FORGET TO ADD ISADULT == HARDCODE FIX
-            Training training = new Training(date, necessities, location, title, true);
-            trainingViewModel.insert(training);
+            //Training training = new Training(date, necessities, location, title, true);
+            //trainingViewModel.insert(training);
+
+            RequestHandler.getTrainingsData(getActivity(), getActivity());
 
             Toast.makeText(getActivity(), "Training saved", Toast.LENGTH_SHORT).show();
         } else {

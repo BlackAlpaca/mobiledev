@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pxl.be.mobiledevproject.database.RequestHandler;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
 
@@ -57,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
            navigationView.setCheckedItem(R.id.nav_members);
 
-            trainingViewModel = ViewModelProviders.of(this).get(TrainingViewModel.class);
-            trainingViewModel.deleteAllTrainings();
 
-            requestQueue = Volley.newRequestQueue(this);
-            getTrainingsData();
+            RequestHandler.getTrainingsData(this, this);
+
         }
     }
 
@@ -104,34 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    private void getTrainingsData(){
-        String url = "https://api.myjson.com/bins/1g0gae";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null
-                , response -> {
-            try {
-                JSONArray jsonArray = response.getJSONArray("trainings");
-
-                for (int i = 0; i < jsonArray.length(); i++){
-                    JSONObject training = jsonArray.getJSONObject(i);
-
-                    int id = training.getInt("id");
-                    String localDateTime = training.getString("localDateTime");
-                    String necessities = training.getString("necessities");
-                    String location = training.getString("location");
-                    String title = training.getString("title");
-                    String isAdult = training.getString("isAdult");
-
-                    trainingViewModel.insert(new Training( localDateTime, necessities, location, title, Boolean.valueOf(isAdult) ));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, Throwable::printStackTrace);
-
-        requestQueue.add(request);
     }
 
 
