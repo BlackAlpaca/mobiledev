@@ -19,12 +19,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import pxl.be.mobiledevproject.adapter.TrainingAdapter;
+import pxl.be.mobiledevproject.database.TrainingDatabase;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
 
@@ -42,6 +53,7 @@ public class Training_management extends Fragment {
     RecyclerView recyclerView;
 
     private Unbinder unbinder;
+
 
     public Training_management() {
         // Required empty public constructor
@@ -61,6 +73,7 @@ public class Training_management extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         FloatingActionButton buttonAddTraining = this.buttonAddTraining;
         buttonAddTraining.setOnClickListener(v -> {
@@ -129,4 +142,7 @@ public class Training_management extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+
 }

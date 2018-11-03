@@ -1,6 +1,11 @@
 package pxl.be.mobiledevproject;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,15 +16,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pxl.be.mobiledevproject.models.Training;
+import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private RequestQueue requestQueue;
+    private TrainingViewModel trainingViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,11 +54,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-           // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Training_management.newInstance()).commit();
-           // navigationView.setCheckedItem(R.id.nav_members);
+           getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+           navigationView.setCheckedItem(R.id.nav_members);
+
+            trainingViewModel = ViewModelProviders.of(this).get(TrainingViewModel.class);
+            trainingViewModel.deleteAllTrainings();
+
+            requestQueue = Volley.newRequestQueue(this);
+            getTrainingsData();
         }
-
-
     }
 
     @Override
@@ -81,4 +105,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+    private void getTrainingsData(){
+        String url = "https://api.myjson.com/bins/1g0gae";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null
+                , response -> {
+            try {
+                JSONArray jsonArray = response.getJSONArray("trainings");
+
+                for (int i = 0; i < jsonArray.length(); i++){
+                    JSONObject training = jsonArray.getJSONObject(i);
+
+                    int id = training.getInt("id");
+                    String localDateTime = training.getString("localDateTime");
+                    String necessities = training.getString("necessities");
+                    String location = training.getString("location");
+                    String title = training.getString("title");
+                    String isAdult = training.getString("isAdult");
+
+                    trainingViewModel.insert(new Training( localDateTime, necessities, location, title, Boolean.valueOf(isAdult) ));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, Throwable::printStackTrace);
+
+        requestQueue.add(request);
+    }
+
+
 }

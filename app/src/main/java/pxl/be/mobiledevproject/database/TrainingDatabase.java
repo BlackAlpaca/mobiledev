@@ -7,10 +7,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import pxl.be.mobiledevproject.dao.TrainingDao;
 import pxl.be.mobiledevproject.models.Training;
@@ -19,7 +15,6 @@ import pxl.be.mobiledevproject.models.Training;
 public abstract class TrainingDatabase extends RoomDatabase {
 
     private static TrainingDatabase instance;
-
     public abstract TrainingDao trainingDao();
 
     // Only 1 thread has access
@@ -45,28 +40,12 @@ public abstract class TrainingDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private TrainingDao trainingDao;
 
-        public PopulateDbAsyncTask(TrainingDatabase db) {
+        private PopulateDbAsyncTask(TrainingDatabase db) {
             trainingDao = db.trainingDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            LocalDateTime now = LocalDateTime.now();
-            String dateTime = String.format("%s/%s/%s", now.getDayOfMonth(), now.getMonthValue(), now.getYear());
-            trainingDao.insert(
-                    new Training(
-                            dateTime,
-                            "Schoenen",
-                            "Sporthalleke",
-                            "doodgaan voor de fun",
-                            true));
-            trainingDao.insert(
-                    new Training(
-                            dateTime,
-                            "aardappelen",
-                            "buiten",
-                            "tis koud",
-                            true));
             return null;
         }
     }
