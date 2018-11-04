@@ -13,4 +13,8 @@
     <string name="attack_speed">Attack Speed</string>
     <string name="postURL">http://192.168.1.26:8080/training/new</string>
     <string name="getURL">http://192.168.1.26:8080/training/all</string>
+    <!--<string name="postURL">http://192.168.137.1:8080/training/new</string>-->
+    <!--<string name="getURL">http://192.168.137.1:8080/training/all</string>-->
+
+    <!-- URL Veranderen naar de host URL van de hotspot vn de pc om op echte gsm te testen -->
 </resources>
