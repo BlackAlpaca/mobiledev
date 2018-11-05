@@ -68,8 +68,7 @@ public class RequestHandler {
     }
 
 
-    public static void postTrainingsData(Context context, String title, String necessities, String location, String date) {
-        //String url = "https://api.myjson.com/bins/15hali";
+    public static void postTrainingsData(Context context, String title, String necessities, String location, String date, boolean isAdult) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = context.getString(R.string.postURL);
 
@@ -90,7 +89,7 @@ public class RequestHandler {
                 params.put("necessities", necessities);
                 params.put("location", location);
                 params.put("localDateTime", date);
-                params.put("adult", "true");
+                params.put("adult", Boolean.toString(isAdult));
 
                 return params;
             }

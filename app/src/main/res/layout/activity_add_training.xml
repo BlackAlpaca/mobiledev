@@ -34,6 +34,17 @@
         android:layout_marginTop="10dp"
         android:autofillHints="" />
 
+    <Switch
+        android:id="@+id/swIsAdult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:showText="true"
+        android:splitTrack="false"
+        android:text="@string/Group"
+        android:textOff="@string/MinusTwelve"
+        android:textOn="@string/Plus12" />
+
     <CalendarView
         android:id="@+id/calendar_view_create"
         android:layout_width="match_parent"

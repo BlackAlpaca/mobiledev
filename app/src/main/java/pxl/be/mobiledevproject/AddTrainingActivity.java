@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -27,11 +28,14 @@ public class AddTrainingActivity extends AppCompatActivity {
             "pxl.be.mobiledevproject.EXTRA_LOCATION";
     public static final String EXTRA_DATE =
             "pxl.be.mobiledevproject.EXTRA_DATE";
+    public static final String EXTRA_ISADULT =
+            "pxl.be.mobiledevproject.EXTRA_ISADULT";
 
     private EditText editTextTitle;
     private EditText editTextNecessities;
     private EditText editTextLocation;
     private CalendarView calendarView;
+    private Switch swIsAdult;
     private long selectedDate;
     private RequestQueue requestQueue;
 
@@ -44,7 +48,7 @@ public class AddTrainingActivity extends AppCompatActivity {
         editTextNecessities = findViewById(R.id.edit_text_necessities);
         editTextLocation = findViewById(R.id.edit_text_location);
         calendarView = findViewById(R.id.calendar_view_create);
-
+        swIsAdult = findViewById(R.id.swIsAdult);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Add Training");
@@ -82,6 +86,7 @@ public class AddTrainingActivity extends AppCompatActivity {
         String location = editTextLocation.getText().toString();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String date = sdf.format(new Date(selectedDate));
+        boolean isAdult = swIsAdult.isChecked();
 
         if (title.trim().isEmpty() || necessities.trim().isEmpty() || location.trim().isEmpty()) {
             Toast.makeText(this, "Please insert all fields", Toast.LENGTH_SHORT).show();
@@ -93,8 +98,9 @@ public class AddTrainingActivity extends AppCompatActivity {
         data.putExtra(EXTRA_NECESSITIES, necessities);
         data.putExtra(EXTRA_LOCATION, location);
         data.putExtra(EXTRA_DATE, date);
+        data.putExtra(EXTRA_ISADULT, isAdult);
 
-        RequestHandler.postTrainingsData(this, title, necessities, location, date);
+        RequestHandler.postTrainingsData(this, title, necessities, location, date, isAdult);
 
         setResult(RESULT_OK, data);
         finish();

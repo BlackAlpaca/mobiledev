@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import pxl.be.mobiledevproject.database.RequestHandler;
 
 

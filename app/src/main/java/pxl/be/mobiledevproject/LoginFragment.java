@@ -1,7 +1,5 @@
 package pxl.be.mobiledevproject;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,8 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -63,14 +59,9 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         unbinder = ButterKnife.bind(this, view);
+        checkUsernameExists();
         return view;
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkUsernameExists();
     }
 
     private void checkUsernameExists() {
@@ -89,7 +80,7 @@ public class LoginFragment extends Fragment {
             showNotification("Jarnac Notification", String.format("Welcome, %s", username));
             tvWelcomeUser.setText(String.format("Welcome, %s", username));
         } else {
-            loginName.setText(getUsername());
+            loginName.setText("");
         }
     }
 
@@ -108,26 +99,6 @@ public class LoginFragment extends Fragment {
         editor.apply();
 
         checkUsernameExists();
-    }
-
-    public String getUsername() {
-        AccountManager manager = AccountManager.get(getActivity());
-        Account[] accounts = manager.getAccountsByType("com.google");
-        List<String> possibleEmails = new LinkedList<>();
-
-        for (Account account : accounts) {
-            possibleEmails.add(account.name);
-        }
-
-        if (!possibleEmails.isEmpty() && possibleEmails.get(0) != null) {
-            String email = possibleEmails.get(0);
-            String[] parts = email.split("@");
-            if (parts.length > 0 && parts[0] != null)
-                return parts[0];
-            else
-                return "";
-        } else
-            return "";
     }
 
 

@@ -85,12 +85,20 @@ public class Training_management extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                Training selected = mAdapter.getNoteAt(viewHolder.getAdapterPosition());
-
-                TextView itemDetailNecessities = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(viewHolder.getAdapterPosition()).findViewById(R.id.text_view_necessities);
-                TextView itemDetailLocation = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(viewHolder.getAdapterPosition()).findViewById(R.id.text_view_location);
+                int pos = viewHolder.getAdapterPosition();
+                Training selected = mAdapter.getNoteAt(pos);
+                TextView itemDetailNecessities = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_necessities);
+                TextView itemDetailLocation = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_location);
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                    mAdapter.notifyDataSetChanged();
+//                    ViewGroup row = (ViewGroup) viewHolder.itemView.getParent();
+//                    for (int itemPos = 0; itemPos < row.getChildCount(); itemPos++) {
+//                        View view = row.getChildAt(itemPos);
+//                        view.findViewById(R.id.text_view_location).setVisibility(View.VISIBLE);
+//                        view.findViewById(R.id.text_view_necessities).setVisibility(View.VISIBLE);
+//                    }
+
                     mAdapter.notifyDataSetChanged();
                     // In landscape
                     itemDetailNecessities.setVisibility(View.VISIBLE);
@@ -124,10 +132,11 @@ public class Training_management extends Fragment {
             String necessities = data.getStringExtra(AddTrainingActivity.EXTRA_NECESSITIES);
             String location = data.getStringExtra(AddTrainingActivity.EXTRA_LOCATION);
             String date = data.getStringExtra(AddTrainingActivity.EXTRA_DATE);
+            boolean isAdult = Boolean.valueOf(data.getStringExtra(AddTrainingActivity.EXTRA_ISADULT));
 
             //TODO: IM F***ING STUPID AND FORGET TO ADD ISADULT == HARDCODE FIX
-            //Training training = new Training(date, necessities, location, title, true);
-            //trainingViewModel.insert(training);
+            Training training = new Training(date, necessities, location, title, isAdult);
+            trainingViewModel.insert(training);
 
             RequestHandler.getTrainingsData(getActivity(), getActivity());
 
