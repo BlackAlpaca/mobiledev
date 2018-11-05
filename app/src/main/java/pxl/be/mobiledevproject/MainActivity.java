@@ -4,7 +4,9 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -63,8 +65,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .replace(R.id.fragment_container,
                                 LoginFragment.newInstance()).commit();
                 break;
-            case R.id.nav_share:
-                Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
+            case R.id.nav_website:
+                String url = "http://www.schermclubjarnac.org/";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
                 break;
             case R.id.nav_calendar:
                 getSupportFragmentManager()
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_accelerometer:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CalculateSpeed.newInstance()).commit();
                 break;
-            case R.id.nav_members:
+            case R.id.nav_location:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LocationFragment()).commit();
                 break;
         }

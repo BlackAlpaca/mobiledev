@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -23,6 +24,10 @@ public class LocationFragment extends Fragment {
     Button btnShowLocation;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+
+    @BindView(R.id.tvDistanceToGym)
+    TextView tvDistanceToGym;
+
 
     GPSTracker gps;
     Unbinder unbinder;
@@ -85,8 +90,8 @@ public class LocationFragment extends Fragment {
             double longitude = gps.getLongitude();
 
             // \n is for new line
-//            Toast.makeText(getContext(), "Your Location is - \nLat: "
-//                    + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+           Toast.makeText(getContext(), "Your Location is - \nLat: "
+                    + latitude + "\nLong: " + longitude, Toast.LENGTH_SHORT).show();
 
             Location selected_location=new Location("userLocation");
             selected_location.setLatitude(latitude);
@@ -97,7 +102,9 @@ public class LocationFragment extends Fragment {
             near_locations.setLongitude(5.247550);
             double distance = selected_location.distanceTo(near_locations);
 
-           Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
+           //Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
+
+           tvDistanceToGym.setText(String.format("You have to walk: \n%s meters", Math.round(distance * 100.0) / 100.0));
 
         }else{
             Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();

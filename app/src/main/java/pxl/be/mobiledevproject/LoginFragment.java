@@ -139,16 +139,16 @@ public class LoginFragment extends Fragment {
                 (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("default",
-                    "YOUR_CHANNEL_NAME",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
+                    "Jarnac",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Jarnac_Description");
             mNotificationManager.createNotificationChannel(channel);
         }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "default")
-                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
-                .setContentTitle(title) // title for notification
-                .setContentText(content)// message for notification
-                .setAutoCancel(true); // clear notification after click
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setAutoCancel(true);
         Intent intent = new Intent(getContext(), MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pi);

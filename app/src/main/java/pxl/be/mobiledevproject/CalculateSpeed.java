@@ -97,13 +97,13 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // HOLD PHONE WITH SCREEN TO YOU
+        // HOLD PHONE WITH SCREEN TO YOU :)
         if (maxZ < event.values[2]){
             maxZ = event.values[2];
         }
 
         if (tvAccelerometer != null ){
-            tvAccelerometer.setText("Max Attack Speed : " + (Math.round(maxZ * 100.0) / 100.0));
+            tvAccelerometer.setText(String.format("Max Attack Speed : \n%s", Math.round(maxZ * 100.0) / 100.0));
         }
     }
 
