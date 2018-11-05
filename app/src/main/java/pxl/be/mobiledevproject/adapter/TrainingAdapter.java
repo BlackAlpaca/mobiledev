@@ -16,11 +16,12 @@ import pxl.be.mobiledevproject.models.Training;
 public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingHolder> {
     private List<Training> trainings = new ArrayList<>();
 
+
     @NonNull
     @Override
     public TrainingHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                                        .inflate(R.layout.training_item, viewGroup, false);
+                .inflate(R.layout.training_item, viewGroup, false);
         return new TrainingHolder(itemView);
     }
 
@@ -31,6 +32,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         trainingHolder.textViewNecessities.setText(currentTraining.getNecessities());
         trainingHolder.textViewLocation.setText(currentTraining.getLocation());
         trainingHolder.textViewDateTime.setText(currentTraining.getLocalDateTime());
+        trainingHolder.textViewForAdults.setText(currentTraining.isAdult() ? "Group -12" : "Group +12");
     }
 
     @Override
@@ -38,21 +40,22 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         return trainings.size();
     }
 
-    public void setTrainings(List<Training> trainings){
+    public void setTrainings(List<Training> trainings) {
         this.trainings = trainings;
         //TODO: outdated
         notifyDataSetChanged();
     }
 
-    public Training getNoteAt(int position){
+    public Training getNoteAt(int position) {
         return trainings.get(position);
     }
 
-    class TrainingHolder extends RecyclerView.ViewHolder{
+    class TrainingHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewNecessities;
         private TextView textViewLocation;
         private TextView textViewDateTime;
+        private TextView textViewForAdults;
 
         public TrainingHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +63,8 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
             textViewNecessities = itemView.findViewById(R.id.text_view_necessities);
             textViewLocation = itemView.findViewById(R.id.text_view_location);
             textViewDateTime = itemView.findViewById(R.id.text_view_datetime);
+            textViewForAdults = itemView.findViewById(R.id.text_view_forAdults);
         }
     }
+
 }

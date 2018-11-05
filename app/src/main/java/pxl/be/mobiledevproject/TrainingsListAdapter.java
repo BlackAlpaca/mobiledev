@@ -6,31 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import pxl.be.mobiledevproject.models.Training;
 
 public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdapter.MyViewHolder> {
 
-    private Training[] dataset;
+    private static Training[] dataset;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView trainingsText;
-        public MyViewHolder(View v){
-            super(v);
-            trainingsText = (TextView) v.findViewById(R.id.textViewTrainings);
-        }
-    }
-
-    public TrainingsListAdapter(List<Training> myDataset){
+    public TrainingsListAdapter(List<Training> myDataset) {
         dataset = myDataset.toArray(new Training[0]);
     }
 
     @Override
-    public TrainingsListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.trainings_list_item, parent, false);
+    public TrainingsListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trainings_list_item, parent, false);
 
         MyViewHolder vh = new MyViewHolder(view);
         return vh;
@@ -50,8 +40,16 @@ public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdap
         return dataset.length;
     }
 
-
-    private String setTrainingText(Training training){
+    private String setTrainingText(Training training) {
         return String.format("%s - Date: %s - Location: %s", training.getTitle(), training.getLocalDateTime(), training.getLocation());
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView trainingsText;
+
+        public MyViewHolder(View v) {
+            super(v);
+            trainingsText = (TextView) v.findViewById(R.id.textViewTrainings);
+        }
     }
 }

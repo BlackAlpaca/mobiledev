@@ -1,11 +1,9 @@
 package pxl.be.mobiledevproject;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,41 +15,26 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import pxl.be.mobiledevproject.adapter.TrainingAdapter;
 import pxl.be.mobiledevproject.database.RequestHandler;
-import pxl.be.mobiledevproject.database.TrainingDatabase;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
-
 
 public class Training_management extends Fragment {
 
     public static final int ADD_TRAINING_REQUEST = 1;
-    private TrainingViewModel trainingViewModel;
-
-
     @BindView(R.id.button_add_training)
     FloatingActionButton buttonAddTraining;
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    private TrainingViewModel trainingViewModel;
+    private TrainingAdapter mAdapter;
 
     private Unbinder unbinder;
 
@@ -87,13 +70,14 @@ public class Training_management extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        TrainingAdapter adapter = new TrainingAdapter();
-        recyclerView.setAdapter(adapter);
+        mAdapter = new TrainingAdapter();
+        recyclerView.setAdapter(mAdapter);
 
         trainingViewModel = ViewModelProviders.of(this).get(TrainingViewModel.class);
-        trainingViewModel.getAllTrainings().observe(this, adapter::setTrainings);
+        trainingViewModel.getAllTrainings().observe(this, mAdapter::setTrainings);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
@@ -101,8 +85,31 @@ public class Training_management extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                trainingViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(getActivity(), "Training deleted", Toast.LENGTH_SHORT).show();
+                Training selected = mAdapter.getNoteAt(viewHolder.getAdapterPosition());
+
+                TextView itemDetailNecessities = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(viewHolder.getAdapterPosition()).findViewById(R.id.text_view_necessities);
+                TextView itemDetailLocation = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(viewHolder.getAdapterPosition()).findViewById(R.id.text_view_location);
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    mAdapter.notifyDataSetChanged();
+                    // In landscape
+                    itemDetailNecessities.setVisibility(View.VISIBLE);
+                    itemDetailNecessities.setText(selected.getNecessities());
+                    itemDetailLocation.setVisibility(View.VISIBLE);
+                    itemDetailLocation.setText(selected.getLocation());
+                } else {
+                    // In portrait
+                    mAdapter.notifyDataSetChanged();
+                    itemDetailNecessities.setVisibility(View.INVISIBLE);
+                    itemDetailLocation.setVisibility(View.INVISIBLE);
+
+                    String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", selected.getNecessities(), selected.getLocation());
+
+                    Class destinationActivity = DetailActivity.class;
+                    Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
+                    startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
+                    startActivity(startChildActivityIntent, null);
+                }
             }
         }).attachToRecyclerView(recyclerView);
     }
@@ -112,7 +119,7 @@ public class Training_management extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         getActivity();
-        if (requestCode == ADD_TRAINING_REQUEST && resultCode == Activity.RESULT_OK){
+        if (requestCode == ADD_TRAINING_REQUEST && resultCode == Activity.RESULT_OK) {
             String title = data.getStringExtra(AddTrainingActivity.EXTRA_TITLE);
             String necessities = data.getStringExtra(AddTrainingActivity.EXTRA_NECESSITIES);
             String location = data.getStringExtra(AddTrainingActivity.EXTRA_LOCATION);
@@ -147,7 +154,5 @@ public class Training_management extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 
 }

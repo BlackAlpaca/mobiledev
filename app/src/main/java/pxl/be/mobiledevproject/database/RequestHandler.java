@@ -1,14 +1,8 @@
 package pxl.be.mobiledevproject.database;
 
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,14 +18,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import pxl.be.mobiledevproject.MainActivity;
 import pxl.be.mobiledevproject.R;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
 
 public class RequestHandler {
 
-    public static void getTrainingsData(FragmentActivity activity, Context context){
+    public static void getTrainingsData(FragmentActivity activity, Context context) {
         //String url = "https://api.myjson.com/bins/15hali";
         TrainingViewModel trainingViewModel;
         RequestQueue requestQueue;
@@ -54,7 +47,7 @@ public class RequestHandler {
             try {
                 JSONArray jsonArray = response.getJSONArray("trainings");
 
-                for (int i = 0; i < jsonArray.length(); i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject training = jsonArray.getJSONObject(i);
 
                     int id = training.getInt("id");
@@ -64,7 +57,7 @@ public class RequestHandler {
                     String title = training.getString("title");
                     String isAdult = training.getString("adult");
 
-                    trainingViewModel.insert(new Training( localDateTime, necessities, location, title, Boolean.valueOf(isAdult) ));
+                    trainingViewModel.insert(new Training(localDateTime, necessities, location, title, Boolean.valueOf(isAdult)));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -75,7 +68,7 @@ public class RequestHandler {
     }
 
 
-    public static void postTrainingsData(Context context, String title, String necessities, String location, String date){
+    public static void postTrainingsData(Context context, String title, String necessities, String location, String date) {
         //String url = "https://api.myjson.com/bins/15hali";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = context.getString(R.string.postURL);
@@ -91,9 +84,8 @@ public class RequestHandler {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("necessities", necessities);
                 params.put("location", location);
