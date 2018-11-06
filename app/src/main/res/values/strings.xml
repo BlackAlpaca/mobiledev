@@ -21,6 +21,9 @@
     <string name="MinusTwelve">-12</string>
     <string name="Plus12">+12</string>
     <string name="Group">Group</string>
+    <string name="jarnacRole">JarnacRole</string>
+    <string name="noPermissionMakeTraining">You have no permission to create a training</string>
+    <string name="trainerLoginName">ignace</string>
 
     <!-- URL Veranderen naar de host URL van de hotspot vn de pc om op echte gsm te testen -->
 </resources>

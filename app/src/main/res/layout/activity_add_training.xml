@@ -43,7 +43,8 @@
         android:splitTrack="false"
         android:text="@string/Group"
         android:textOff="@string/MinusTwelve"
-        android:textOn="@string/Plus12" />
+        android:textOn="@string/Plus12"
+        tools:checked="false" />
 
     <CalendarView
         android:id="@+id/calendar_view_create"

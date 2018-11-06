@@ -104,7 +104,7 @@ public class LocationFragment extends Fragment {
 
             //Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
 
-            tvDistanceToGym.setText(String.format("You have to walk: \n%s meters", Math.round(distance * 100.0) / 100.0));
+            tvDistanceToGym.setText(String.format("You have to walk: \n%s meters \n \n Go burn those calories!", Math.round(distance * 100.0) / 100.0));
 
         } else {
             Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();

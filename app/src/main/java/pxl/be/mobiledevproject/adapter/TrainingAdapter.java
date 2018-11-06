@@ -32,7 +32,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         trainingHolder.textViewNecessities.setText(currentTraining.getNecessities());
         trainingHolder.textViewLocation.setText(currentTraining.getLocation());
         trainingHolder.textViewDateTime.setText(currentTraining.getLocalDateTime());
-        trainingHolder.textViewForAdults.setText(currentTraining.isAdult() ? "Group -12" : "Group +12");
+        trainingHolder.textViewForAdults.setText(currentTraining.isAdult() ? "Group +12" : "Group -12");
     }
 
     @Override

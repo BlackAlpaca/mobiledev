@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pxl.be.mobiledevproject.models.JarnacRole;
+import pxl.be.mobiledevproject.models.User;
 
 
 public class LoginFragment extends Fragment {
@@ -93,9 +95,17 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.btnLogin)
     public void onButtonPressed() {
         String name = loginName.getText().toString();
+
         SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.username), name);
+
+        if (name.equalsIgnoreCase(getString(R.string.trainerLoginName))){
+            editor.putString(getString(R.string.jarnacRole), JarnacRole.TRAINER.toString());
+        } else {
+            editor.putString(getString(R.string.jarnacRole), JarnacRole.MEMBER.toString());
+        }
+
         editor.apply();
 
         checkUsernameExists();

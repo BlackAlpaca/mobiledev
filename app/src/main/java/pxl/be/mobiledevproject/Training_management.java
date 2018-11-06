@@ -2,7 +2,9 @@ package pxl.be.mobiledevproject;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,11 +20,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import pxl.be.mobiledevproject.adapter.TrainingAdapter;
 import pxl.be.mobiledevproject.database.RequestHandler;
+import pxl.be.mobiledevproject.models.JarnacRole;
 import pxl.be.mobiledevproject.models.Training;
 import pxl.be.mobiledevproject.viewmodel.TrainingViewModel;
 
@@ -63,8 +68,17 @@ public class Training_management extends Fragment {
 
         FloatingActionButton buttonAddTraining = this.buttonAddTraining;
         buttonAddTraining.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
-            startActivityForResult(intent, ADD_TRAINING_REQUEST);
+            SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
+            JarnacRole role = JarnacRole.valueOf(sharedPreferences.getString(getString(R.string.jarnacRole), JarnacRole.MEMBER.toString()));
+
+            if (role == JarnacRole.TRAINER){
+                Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
+                startActivityForResult(intent, ADD_TRAINING_REQUEST);
+            } else {
+                Toast.makeText(this.getContext(), getString(R.string.noPermissionMakeTraining), Toast.LENGTH_SHORT).show();
+            }
+
+
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
