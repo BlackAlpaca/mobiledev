@@ -10,10 +10,21 @@
     tools:context=".Training_management"
     tools:openDrawer="start">
 
+    <fragment
+        android:id="@+id/fragment_details_training"
+        android:name="pxl.be.mobiledevproject.trainingDetailFragment"
+        android:layout_width="350dp"
+        android:layout_height="376dp"
+        app:layout_anchor="@+id/fragment_container"
+        app:layout_anchorGravity="right|center"
+        android:visibility="gone"/>
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -29,4 +40,8 @@
         android:layout_gravity="bottom|end"
         android:src="@drawable/ic_add" />
 
+
+
+
 </android.support.design.widget.CoordinatorLayout>
+

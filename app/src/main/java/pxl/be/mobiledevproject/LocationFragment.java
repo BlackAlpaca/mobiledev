@@ -20,9 +20,9 @@ import butterknife.Unbinder;
 
 public class LocationFragment extends Fragment {
 
+    private static final int REQUEST_CODE_PERMISSION = 2;
     @BindView(R.id.btnGetLocation)
     Button btnShowLocation;
-    private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @BindView(R.id.tvDistanceToGym)
@@ -81,32 +81,32 @@ public class LocationFragment extends Fragment {
     }
 
 
-    private void calculateDistance(){
+    private void calculateDistance() {
         gps = new GPSTracker(getActivity());
 
-        if(gps.canGetLocation()){
+        if (gps.canGetLocation()) {
 
             double latitude = gps.getLatitude();
             double longitude = gps.getLongitude();
 
             // \n is for new line
-           Toast.makeText(getContext(), "Your Location is - \nLat: "
+            Toast.makeText(getContext(), "Your Location is - \nLat: "
                     + latitude + "\nLong: " + longitude, Toast.LENGTH_SHORT).show();
 
-            Location selected_location=new Location("userLocation");
+            Location selected_location = new Location("userLocation");
             selected_location.setLatitude(latitude);
             selected_location.setLongitude(longitude);
 
-            Location near_locations=new Location("gymLocation");
+            Location near_locations = new Location("gymLocation");
             near_locations.setLatitude(51.117430);
             near_locations.setLongitude(5.247550);
             double distance = selected_location.distanceTo(near_locations);
 
-           //Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
 
-           tvDistanceToGym.setText(String.format("You have to walk: \n%s meters", Math.round(distance * 100.0) / 100.0));
+            tvDistanceToGym.setText(String.format("You have to walk: \n%s meters \n \n Go burn those calories!", Math.round(distance * 100.0) / 100.0));
 
-        }else{
+        } else {
             Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             gps.showSettingsAlert();
         }

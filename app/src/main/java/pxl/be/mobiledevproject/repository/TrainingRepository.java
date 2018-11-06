@@ -20,22 +20,22 @@ public class TrainingRepository {
         allTrainings = trainingDao.getAllTrainings();
     }
 
-    public void insert(Training training){
+    public void insert(Training training) {
         new InsertTrainingAsyncTask(trainingDao).execute(training);
     }
 
 
-    public void update(Training training){
+    public void update(Training training) {
         new UpdateTrainingAsyncTask(trainingDao).execute(training);
 
     }
 
 
-    public void delete(Training training){
+    public void delete(Training training) {
         new DeleteTrainingAsyncTask(trainingDao).execute(training);
     }
 
-    public void deleteAllTrainings(){
+    public void deleteAllTrainings() {
         new DeleteAllTrainingAsyncTask(trainingDao).execute();
     }
 

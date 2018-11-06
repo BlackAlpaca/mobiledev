@@ -20,22 +20,22 @@ public class TrainingViewModel extends AndroidViewModel {
         allTrainings = repository.getAllTrainings();
     }
 
-    public void insert(Training training){
+    public void insert(Training training) {
         repository.insert(training);
     }
 
 
-    public void update(Training training){
+    public void update(Training training) {
         repository.update(training);
     }
 
 
-    public void delete(Training training){
+    public void delete(Training training) {
         repository.delete(training);
     }
 
 
-    public void deleteAllTrainings(){
+    public void deleteAllTrainings() {
         repository.deleteAllTrainings();
     }
 

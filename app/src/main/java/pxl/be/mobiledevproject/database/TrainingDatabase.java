@@ -15,20 +15,6 @@ import pxl.be.mobiledevproject.models.Training;
 public abstract class TrainingDatabase extends RoomDatabase {
 
     private static TrainingDatabase instance;
-    public abstract TrainingDao trainingDao();
-
-    // Only 1 thread has access
-    public static synchronized TrainingDatabase getInstance(Context context){
-        if (instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                                                TrainingDatabase.class, "training_database")
-                    .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
-                    .build();
-        }
-        return instance;
-    }
-
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -37,7 +23,21 @@ public abstract class TrainingDatabase extends RoomDatabase {
         }
     };
 
-    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
+    // Only 1 thread has access
+    public static synchronized TrainingDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                    TrainingDatabase.class, "training_database")
+                    .fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
+                    .build();
+        }
+        return instance;
+    }
+
+    public abstract TrainingDao trainingDao();
+
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private TrainingDao trainingDao;
 
         private PopulateDbAsyncTask(TrainingDatabase db) {

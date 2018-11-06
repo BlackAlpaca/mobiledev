@@ -1,7 +1,5 @@
 package pxl.be.mobiledevproject;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.nio.channels.Channel;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pxl.be.mobiledevproject.models.JarnacRole;
+import pxl.be.mobiledevproject.models.User;
 
 
 public class LoginFragment extends Fragment {
@@ -66,34 +61,27 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         unbinder = ButterKnife.bind(this, view);
+        checkUsernameExists();
         return view;
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkUsernameExists();
-    }
-
     private void checkUsernameExists() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
-       if (sharedPreferences.contains(getString(R.string.username))){
-           loginName.setVisibility(View.GONE);
-           btnLogin.setVisibility(View.GONE);
+        if (sharedPreferences.contains(getString(R.string.username))) {
+            loginName.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.GONE);
 
-           String username = sharedPreferences.getString(getString(R.string.username), "Username");
+            String username = sharedPreferences.getString(getString(R.string.username), "Username");
 
-           textViewUserNameNav = getActivity().findViewById(R.id.tvUserNameNav);
-           if (textViewUserNameNav != null){
-              textViewUserNameNav.setText(username);
-           }
-
-           showNotification("Jarnac Notification", String.format("Welcome, %s",username));
-           tvWelcomeUser.setText(String.format("Welcome, %s",username));
-       } else{
-           loginName.setText(getUsername());
-       }
+            textViewUserNameNav = getActivity().findViewById(R.id.tvUserNameNav);
+            if (textViewUserNameNav != null) {
+                textViewUserNameNav.setText(username);
+            }
+            tvWelcomeUser.setText(String.format("Welcome, %s", username));
+        } else {
+            loginName.setText("");
+        }
     }
 
     @Override
@@ -105,53 +93,21 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.btnLogin)
     public void onButtonPressed() {
         String name = loginName.getText().toString();
+
         SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.username),name);
+        editor.putString(getString(R.string.username), name);
+
+        if (name.equalsIgnoreCase(getString(R.string.trainerLoginName))){
+            editor.putString(getString(R.string.jarnacRole), JarnacRole.TRAINER.toString());
+        } else {
+            editor.putString(getString(R.string.jarnacRole), JarnacRole.MEMBER.toString());
+        }
+
         editor.apply();
 
         checkUsernameExists();
     }
 
-    public String getUsername() {
-        AccountManager manager = AccountManager.get(getActivity());
-        Account[] accounts = manager.getAccountsByType("com.google");
-        List<String> possibleEmails = new LinkedList<>();
 
-        for (Account account : accounts) {
-            possibleEmails.add(account.name);
-        }
-
-        if (!possibleEmails.isEmpty() && possibleEmails.get(0) != null) {
-            String email = possibleEmails.get(0);
-            String[] parts = email.split("@");
-            if (parts.length > 0 && parts[0] != null)
-                return parts[0];
-            else
-                return "";
-        } else
-            return "";
-    }
-
-
-   private void showNotification(String title, String content) {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
-                    "Jarnac",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Jarnac_Description");
-            mNotificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "default")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setAutoCancel(true);
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(0, mBuilder.build());
-    }
 }

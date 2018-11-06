@@ -5,10 +5,8 @@ public class User {
 
     private int id;
 
-    private String firstname;
-    private String lastname;
-    private boolean isAdult;
-    private String email;
+    private String name;
+    private JarnacRole role;
 
     public int getId() {
         return id;
@@ -18,35 +16,19 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public JarnacRole getRole() {
+        return role;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public boolean isAdult() {
-        return isAdult;
-    }
-
-    public void setAdult(boolean adult) {
-        isAdult = adult;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRole(JarnacRole role) {
+        this.role = role;
     }
 }

@@ -1,20 +1,16 @@
 package pxl.be.mobiledevproject;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,16 +23,13 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
 
     @BindView(R.id.tvAccelerometer)
     TextView tvAccelerometer;
-
-    private SensorManager sensorManager;
     Sensor accelerometer;
+    View rootView;
+    private SensorManager sensorManager;
     private int maxX;
     private int maxY;
     private float maxZ;
-
     private Unbinder unbinder;
-
-    View rootView;
 
     public CalculateSpeed() {
         // Required empty public constructor
@@ -98,11 +91,11 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         // HOLD PHONE WITH SCREEN TO YOU :)
-        if (maxZ < event.values[2]){
+        if (maxZ < event.values[2]) {
             maxZ = event.values[2];
         }
 
-        if (tvAccelerometer != null ){
+        if (tvAccelerometer != null) {
             tvAccelerometer.setText(String.format("Max Attack Speed : \n%s", Math.round(maxZ * 100.0) / 100.0));
         }
     }

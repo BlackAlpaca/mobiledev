@@ -21,30 +21,41 @@
             android:layout_alignParentStart="true"/>
 
         <TextView
-            android:id="@+id/text_view_necessities"
+            android:id="@+id/text_view_forAdults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/text_view_title"
-            android:text="necessities"/>
-
-        <TextView
-            android:id="@+id/text_view_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/text_view_necessities"
             android:maxLines="1"
-            android:text="location"/>
+            android:text="forAdults"/>
 
         <TextView
             android:id="@+id/text_view_datetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_view_forAdults"
+            android:maxLines="1"
+            android:text="datetime"/>
+
+        <TextView
+            android:id="@+id/text_view_necessities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/text_view_title"
+            android:text="necessities"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/text_view_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/text_view_necessities"
             android:maxLines="1"
-            android:text="datetime"/>
+            android:text="N.A."
+            android:visibility="invisible"/>
 
 
         
