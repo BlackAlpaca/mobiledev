@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ public class Training_management extends Fragment {
     RecyclerView recyclerView;
     private TrainingViewModel trainingViewModel;
     private TrainingAdapter mAdapter;
+    View fragmentDetails;
 
     private Unbinder unbinder;
 
@@ -63,6 +65,7 @@ public class Training_management extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        fragmentDetails = getActivity().findViewById(R.id.fragment_details_training);
 
         RequestHandler.getTrainingsData(getActivity(), getContext());
 
@@ -103,29 +106,25 @@ public class Training_management extends Fragment {
                 Training selected = mAdapter.getNoteAt(pos);
                 TextView itemDetailNecessities = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_necessities);
                 TextView itemDetailLocation = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_location);
+
+                String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", selected.getNecessities(), selected.getLocation());
+
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//                    mAdapter.notifyDataSetChanged();
-//                    ViewGroup row = (ViewGroup) viewHolder.itemView.getParent();
-//                    for (int itemPos = 0; itemPos < row.getChildCount(); itemPos++) {
-//                        View view = row.getChildAt(itemPos);
-//                        view.findViewById(R.id.text_view_location).setVisibility(View.VISIBLE);
-//                        view.findViewById(R.id.text_view_necessities).setVisibility(View.VISIBLE);
-//                    }
-
                     mAdapter.notifyDataSetChanged();
                     // In landscape
-                    itemDetailNecessities.setVisibility(View.VISIBLE);
-                    itemDetailNecessities.setText(selected.getNecessities());
-                    itemDetailLocation.setVisibility(View.VISIBLE);
-                    itemDetailLocation.setText(selected.getLocation());
+
+
+
+                    fragmentDetails.setVisibility(View.VISIBLE);
+
+                    TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
+                    textView.setText(dataToSend);
                 } else {
                     // In portrait
                     mAdapter.notifyDataSetChanged();
                     itemDetailNecessities.setVisibility(View.INVISIBLE);
                     itemDetailLocation.setVisibility(View.INVISIBLE);
-
-                    String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", selected.getNecessities(), selected.getLocation());
 
                     Class destinationActivity = DetailActivity.class;
                     Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
@@ -178,4 +177,21 @@ public class Training_management extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+           // params.width= 850;
+            params.width = getResources().getDisplayMetrics().widthPixels / 2;
+            recyclerView.setLayoutParams(params);
+
+            params = fragmentDetails.getLayoutParams();
+            params.width = getResources().getDisplayMetrics().widthPixels / 2;
+            fragmentDetails.setLayoutParams(params);
+            
+            fragmentDetails.setVisibility(View.VISIBLE);
+        }
+    }
 }
