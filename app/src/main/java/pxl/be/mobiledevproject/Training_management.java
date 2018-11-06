@@ -18,6 +18,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,9 +104,10 @@ public class Training_management extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int pos = viewHolder.getAdapterPosition();
+
                 Training selected = mAdapter.getNoteAt(pos);
-                TextView itemDetailNecessities = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_necessities);
-                TextView itemDetailLocation = ((ViewGroup) viewHolder.itemView.getParent()).getChildAt(pos).findViewById(R.id.text_view_location);
+                TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
+                TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
 
                 String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", selected.getNecessities(), selected.getLocation());
 
@@ -113,9 +115,6 @@ public class Training_management extends Fragment {
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     mAdapter.notifyDataSetChanged();
                     // In landscape
-
-
-
                     fragmentDetails.setVisibility(View.VISIBLE);
 
                     TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
@@ -190,7 +189,7 @@ public class Training_management extends Fragment {
             params = fragmentDetails.getLayoutParams();
             params.width = getResources().getDisplayMetrics().widthPixels / 2;
             fragmentDetails.setLayoutParams(params);
-            
+
             fragmentDetails.setVisibility(View.VISIBLE);
         }
     }

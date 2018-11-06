@@ -78,8 +78,6 @@ public class LoginFragment extends Fragment {
             if (textViewUserNameNav != null) {
                 textViewUserNameNav.setText(username);
             }
-
-            showNotification("Jarnac Notification", String.format("Welcome, %s", username));
             tvWelcomeUser.setText(String.format("Welcome, %s", username));
         } else {
             loginName.setText("");
@@ -112,24 +110,4 @@ public class LoginFragment extends Fragment {
     }
 
 
-    private void showNotification(String title, String content) {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
-                    "Jarnac",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Jarnac_Description");
-            mNotificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "default")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setAutoCancel(true);
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(0, mBuilder.build());
-    }
 }
