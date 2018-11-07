@@ -24,16 +24,13 @@ public class TrainingViewModel extends AndroidViewModel {
         repository.insert(training);
     }
 
-
     public void update(Training training) {
         repository.update(training);
     }
 
-
     public void delete(Training training) {
         repository.delete(training);
     }
-
 
     public void deleteAllTrainings() {
         repository.deleteAllTrainings();

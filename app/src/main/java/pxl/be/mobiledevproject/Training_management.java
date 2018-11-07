@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +17,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +39,7 @@ public class Training_management extends Fragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private TrainingViewModel trainingViewModel;
-    private TrainingAdapter mAdapter;
+    private TrainingAdapter adapter;
     View fragmentDetails;
 
     private Unbinder unbinder;
@@ -51,7 +49,6 @@ public class Training_management extends Fragment {
         // Required empty public constructor
     }
 
-
     public static Training_management newInstance() {
         return new Training_management();
     }
@@ -60,7 +57,6 @@ public class Training_management extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -82,18 +78,16 @@ public class Training_management extends Fragment {
                 Toast.makeText(this.getContext(), getString(R.string.noPermissionMakeTraining), Toast.LENGTH_SHORT).show();
             }
 
-
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new TrainingAdapter();
-        recyclerView.setAdapter(mAdapter);
+        adapter = new TrainingAdapter();
+        recyclerView.setAdapter(adapter);
 
         trainingViewModel = ViewModelProviders.of(this).get(TrainingViewModel.class);
-        trainingViewModel.getAllTrainings().observe(this, mAdapter::setTrainings);
-
+        trainingViewModel.getAllTrainings().observe(this, adapter::setTrainings);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT) {
             @Override
@@ -105,7 +99,7 @@ public class Training_management extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int pos = viewHolder.getAdapterPosition();
 
-                Training selected = mAdapter.getNoteAt(pos);
+                Training selected = adapter.getNoteAt(pos);
                 TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
                 TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
 
@@ -113,7 +107,7 @@ public class Training_management extends Fragment {
 
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     // In landscape
                     fragmentDetails.setVisibility(View.VISIBLE);
 
@@ -121,7 +115,7 @@ public class Training_management extends Fragment {
                     textView.setText(dataToSend);
                 } else {
                     // In portrait
-                    mAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     itemDetailNecessities.setVisibility(View.INVISIBLE);
                     itemDetailLocation.setVisibility(View.INVISIBLE);
 
@@ -146,7 +140,6 @@ public class Training_management extends Fragment {
             String date = data.getStringExtra(AddTrainingActivity.EXTRA_DATE);
             boolean isAdult = Boolean.valueOf(data.getStringExtra(AddTrainingActivity.EXTRA_ISADULT));
 
-            //TODO: IM F***ING STUPID AND FORGET TO ADD ISADULT == HARDCODE FIX
             Training training = new Training(date, necessities, location, title, isAdult);
             trainingViewModel.insert(training);
 

@@ -12,7 +12,6 @@ public class trainingDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static trainingDetailFragment newInstance() {
         trainingDetailFragment fragment = new trainingDetailFragment();
         return fragment;

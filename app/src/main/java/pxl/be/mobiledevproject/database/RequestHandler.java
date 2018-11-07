@@ -42,8 +42,7 @@ public class RequestHandler {
 
         requestQueue = Volley.newRequestQueue(context);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null
-                , response -> {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
             try {
                 JSONArray jsonArray = response.getJSONArray("trainings");
 
@@ -57,7 +56,13 @@ public class RequestHandler {
                     String title = training.getString("title");
                     String isAdult = training.getString("adult");
 
-                    trainingViewModel.insert(new Training(localDateTime, necessities, location, title, Boolean.valueOf(isAdult)));
+                    trainingViewModel.insert(
+                            new Training(
+                                    localDateTime,
+                                    necessities,
+                                    location,
+                                    title,
+                                    Boolean.valueOf(isAdult)));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -68,7 +73,13 @@ public class RequestHandler {
     }
 
 
-    public static void postTrainingsData(Context context, String title, String necessities, String location, String date, boolean isAdult) {
+    public static void postTrainingsData(Context context,
+                                         String title,
+                                         String necessities,
+                                         String location,
+                                         String date,
+                                         boolean isAdult) {
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = context.getString(R.string.postURL);
 
@@ -96,5 +107,4 @@ public class RequestHandler {
         };
         requestQueue.add(postRequest);
     }
-
 }

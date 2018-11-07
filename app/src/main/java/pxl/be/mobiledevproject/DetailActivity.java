@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.necessitiesDetailActivity)
-    public TextView detail;
+    public TextView textViewDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
             String detailText = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
-            detail.setText(detailText);
+            textViewDetail.setText(detailText);
         }
     }
 }

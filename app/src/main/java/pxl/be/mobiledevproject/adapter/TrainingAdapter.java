@@ -16,12 +16,12 @@ import pxl.be.mobiledevproject.models.Training;
 public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingHolder> {
     private List<Training> trainings = new ArrayList<>();
 
-
     @NonNull
     @Override
     public TrainingHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.training_item, viewGroup, false);
+        View itemView = LayoutInflater
+                        .from(viewGroup.getContext())
+                        .inflate(R.layout.training_item, viewGroup, false);
         return new TrainingHolder(itemView);
     }
 
@@ -42,7 +42,6 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
     public void setTrainings(List<Training> trainings) {
         this.trainings = trainings;
-        //TODO: outdated
         notifyDataSetChanged();
     }
 

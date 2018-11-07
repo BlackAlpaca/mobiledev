@@ -22,8 +22,8 @@ public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdap
     public TrainingsListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trainings_list_item, parent, false);
 
-        MyViewHolder vh = new MyViewHolder(view);
-        return vh;
+        MyViewHolder myViewHolder = new MyViewHolder(view);
+        return myViewHolder;
     }
 
     // Replace the contents of a view (invoked by the layout manager)

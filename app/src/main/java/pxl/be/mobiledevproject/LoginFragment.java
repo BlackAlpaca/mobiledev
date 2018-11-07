@@ -1,14 +1,9 @@
 package pxl.be.mobiledevproject;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +18,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import pxl.be.mobiledevproject.models.JarnacRole;
-import pxl.be.mobiledevproject.models.User;
 
 
 public class LoginFragment extends Fragment {
     @BindView(R.id.loginName)
-    EditText loginName;
+    EditText editTextloginName;
 
     @BindView(R.id.tvWelcomeUser)
-    TextView tvWelcomeUser;
+    TextView textViewWelcomeUser;
 
     @BindView(R.id.btnLogin)
-    Button btnLogin;
+    Button buttonLogin;
 
     TextView textViewUserNameNav;
 
@@ -46,7 +40,6 @@ public class LoginFragment extends Fragment {
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
-
     }
 
 
@@ -63,14 +56,13 @@ public class LoginFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         checkUsernameExists();
         return view;
-
     }
 
     private void checkUsernameExists() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
         if (sharedPreferences.contains(getString(R.string.username))) {
-            loginName.setVisibility(View.GONE);
-            btnLogin.setVisibility(View.GONE);
+            editTextloginName.setVisibility(View.GONE);
+            buttonLogin.setVisibility(View.GONE);
 
             String username = sharedPreferences.getString(getString(R.string.username), "Username");
 
@@ -78,9 +70,9 @@ public class LoginFragment extends Fragment {
             if (textViewUserNameNav != null) {
                 textViewUserNameNav.setText(username);
             }
-            tvWelcomeUser.setText(String.format("Welcome, %s", username));
+            textViewWelcomeUser.setText(String.format("Welcome, %s", username));
         } else {
-            loginName.setText("");
+            editTextloginName.setText("");
         }
     }
 
@@ -92,7 +84,7 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btnLogin)
     public void onButtonPressed() {
-        String name = loginName.getText().toString();
+        String name = editTextloginName.getText().toString();
 
         SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -108,6 +100,4 @@ public class LoginFragment extends Fragment {
 
         checkUsernameExists();
     }
-
-
 }
