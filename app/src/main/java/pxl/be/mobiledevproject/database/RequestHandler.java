@@ -34,11 +34,11 @@ public class RequestHandler {
         trainingViewModel = ViewModelProviders.of(activity).get(TrainingViewModel.class);
         trainingViewModel.deleteAllTrainings();
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         requestQueue = Volley.newRequestQueue(context);
 
@@ -67,7 +67,7 @@ public class RequestHandler {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, Throwable::printStackTrace);
+        }, error -> Toast.makeText(context, "Couldn't connect to the API", Toast.LENGTH_LONG).show());
 
         requestQueue.add(request);
     }
@@ -86,11 +86,11 @@ public class RequestHandler {
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
                     // response
-                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Training Saved \n" + response, Toast.LENGTH_SHORT).show();
                 },
                 error -> {
                     // error
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Could not save training" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
         ) {
             @Override

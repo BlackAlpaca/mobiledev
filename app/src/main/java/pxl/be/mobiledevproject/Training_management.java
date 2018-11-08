@@ -144,8 +144,6 @@ public class Training_management extends Fragment {
             trainingViewModel.insert(training);
 
             RequestHandler.getTrainingsData(getActivity(), getActivity());
-
-            Toast.makeText(getActivity(), "Training saved", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Training cancelled", Toast.LENGTH_SHORT).show();
         }
