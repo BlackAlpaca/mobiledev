@@ -8,15 +8,6 @@
             android:icon="@drawable/ic_training"
             android:title="@string/trainings" />
         <item
-            android:id="@+id/nav_members"
-            android:icon="@drawable/ic_users"
-            android:title="@string/members" />
-        <item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_date_range_black_24dp"
-            android:title="Calendar"
-            />
-        <item
             android:id="@+id/nav_location"
             android:icon="@drawable/ic_location"
             android:title="@string/location" />
