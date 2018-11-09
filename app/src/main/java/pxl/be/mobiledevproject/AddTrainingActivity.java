@@ -35,9 +35,8 @@ public class AddTrainingActivity extends AppCompatActivity {
     private EditText editTextNecessities;
     private EditText editTextLocation;
     private CalendarView calendarView;
-    private Switch swIsAdult;
+    private Switch switchIsAdult;
     private long selectedDate;
-    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class AddTrainingActivity extends AppCompatActivity {
         editTextNecessities = findViewById(R.id.edit_text_necessities);
         editTextLocation = findViewById(R.id.edit_text_location);
         calendarView = findViewById(R.id.calendar_view_create);
-        swIsAdult = findViewById(R.id.swIsAdult);
+        switchIsAdult = findViewById(R.id.swIsAdult);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Add Training");
@@ -80,13 +79,12 @@ public class AddTrainingActivity extends AppCompatActivity {
     }
 
     private void saveTraining() {
-
         String title = editTextTitle.getText().toString();
         String necessities = editTextNecessities.getText().toString();
         String location = editTextLocation.getText().toString();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String date = sdf.format(new Date(selectedDate));
-        boolean isAdult = swIsAdult.isChecked();
+        boolean isAdult = switchIsAdult.isChecked();
 
         if (title.trim().isEmpty() || necessities.trim().isEmpty() || location.trim().isEmpty()) {
             Toast.makeText(this, "Please insert all fields", Toast.LENGTH_SHORT).show();
@@ -105,6 +103,4 @@ public class AddTrainingActivity extends AppCompatActivity {
         setResult(RESULT_OK, data);
         finish();
     }
-
-
 }

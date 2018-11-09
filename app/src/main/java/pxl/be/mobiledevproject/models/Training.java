@@ -11,7 +11,6 @@ public class Training {
 
     private String localDateTime;
 
-    //TODO: List<String>??
     private String necessities;
 
     private String location;
@@ -20,32 +19,18 @@ public class Training {
 
     private boolean isAdult;
 
-    public Training(
-            String localDateTime,
-            String necessities,
-            String location,
-            String title,
-            boolean isAdult) {
+    public Training(String localDateTime,
+                    String necessities,
+                    String location,
+                    String title,
+                    boolean isAdult) {
+
         this.localDateTime = localDateTime;
         this.necessities = necessities;
         this.location = location;
         this.title = title;
         this.isAdult = isAdult;
     }
-    /*
-    public Training(int id,
-            String localDateTime,
-            String necessities,
-            String location,
-            String title,
-            boolean isAdult) {
-        this.localDateTime = localDateTime;
-        this.necessities = necessities;
-        this.location = location;
-        this.title = title;
-        this.isAdult = isAdult;
-        this.id = id;
-    }*/
 
     public int getId() {
         return id;

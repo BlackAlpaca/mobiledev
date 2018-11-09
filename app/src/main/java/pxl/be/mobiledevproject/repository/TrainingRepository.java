@@ -24,12 +24,9 @@ public class TrainingRepository {
         new InsertTrainingAsyncTask(trainingDao).execute(training);
     }
 
-
     public void update(Training training) {
         new UpdateTrainingAsyncTask(trainingDao).execute(training);
-
     }
-
 
     public void delete(Training training) {
         new DeleteTrainingAsyncTask(trainingDao).execute(training);
@@ -84,7 +81,6 @@ public class TrainingRepository {
             return null;
         }
     }
-
 
     private static class DeleteAllTrainingAsyncTask extends AsyncTask<Void, Void, Void> {
         private TrainingDao trainingDao;

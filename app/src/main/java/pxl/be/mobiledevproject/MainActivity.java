@@ -20,10 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-
-import java.util.Objects;
-
 import pxl.be.mobiledevproject.database.RequestHandler;
 
 
@@ -70,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -88,13 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
-                break;
-            case R.id.nav_calendar:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, CalendarOverview.newInstance())
-                        .commit();
-
                 break;
             case R.id.nav_accelerometer:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CalculateSpeed.newInstance()).commit();

@@ -22,12 +22,11 @@ public class LocationFragment extends Fragment {
 
     private static final int REQUEST_CODE_PERMISSION = 2;
     @BindView(R.id.btnGetLocation)
-    Button btnShowLocation;
-    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+    Button buttonShowlocation;
+    String permission = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @BindView(R.id.tvDistanceToGym)
-    TextView tvDistanceToGym;
-
+    TextView textViewDistanceToGym;
 
     GPSTracker gps;
     Unbinder unbinder;
@@ -36,7 +35,6 @@ public class LocationFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static LocationFragment newInstance() {
         LocationFragment fragment = new LocationFragment();
         return fragment;
@@ -47,10 +45,10 @@ public class LocationFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         try {
-            if (ActivityCompat.checkSelfPermission(getActivity(), mPermission)
+            if (ActivityCompat.checkSelfPermission(getActivity(), permission)
                     != PackageManager.PERMISSION_GRANTED) {
 
-                ActivityCompat.requestPermissions(getActivity(), new String[]{mPermission},
+                ActivityCompat.requestPermissions(getActivity(), new String[]{permission},
                         REQUEST_CODE_PERMISSION);
             }
         } catch (Exception e) {
@@ -65,7 +63,7 @@ public class LocationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
         unbinder = ButterKnife.bind(this, view);
-        btnShowLocation.setOnClickListener(new View.OnClickListener() {
+        buttonShowlocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculateDistance();
@@ -79,7 +77,6 @@ public class LocationFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 
     private void calculateDistance() {
         gps = new GPSTracker(getActivity());
@@ -102,9 +99,9 @@ public class LocationFragment extends Fragment {
             near_locations.setLongitude(5.247550);
             double distance = selected_location.distanceTo(near_locations);
 
-            //Toast.makeText(getContext(), "The distance to the GYM is: \n" + distance + " meters", Toast.LENGTH_LONG).show();
-
-            tvDistanceToGym.setText(String.format("You have to walk: \n%s meters \n \n Go burn those calories!", Math.round(distance * 100.0) / 100.0));
+            textViewDistanceToGym.setText(String.format(
+                    "You have to walk: \n%s meters \n \n Go burn those calories!", Math.round(distance * 100.0) / 100.0)
+            );
 
         } else {
             Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();

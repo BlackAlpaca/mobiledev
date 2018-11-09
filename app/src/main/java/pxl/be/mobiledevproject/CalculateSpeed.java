@@ -22,7 +22,8 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
 
 
     @BindView(R.id.tvAccelerometer)
-    TextView tvAccelerometer;
+    TextView textViewAccelerometer;
+
     Sensor accelerometer;
     View rootView;
     private SensorManager sensorManager;
@@ -54,11 +55,9 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         } else {
-            tvAccelerometer.setText("Failed to bind");
+            textViewAccelerometer.setText("Failed to bind");
             // fail! we dont have an accelerometer!
         }
-
-
     }
 
     @Override
@@ -95,8 +94,8 @@ public class CalculateSpeed extends Fragment implements SensorEventListener {
             maxZ = event.values[2];
         }
 
-        if (tvAccelerometer != null) {
-            tvAccelerometer.setText(String.format("Max Attack Speed : \n%s", Math.round(maxZ * 100.0) / 100.0));
+        if (textViewAccelerometer != null) {
+            textViewAccelerometer.setText(String.format("Max Attack Speed : \n%s", Math.round(maxZ * 100.0) / 100.0));
         }
     }
 

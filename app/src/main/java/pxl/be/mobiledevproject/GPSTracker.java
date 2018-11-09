@@ -20,7 +20,7 @@ public class GPSTracker extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
-    private final Context mContext;
+    private final Context context;
     // Declaring a Location Manager
     protected LocationManager locationManager;
     // flag for GPS status
@@ -34,14 +34,14 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // longitude
 
     public GPSTracker(Context context) {
-        this.mContext = context;
+        this.context = context;
         getLocation();
     }
 
     @SuppressLint("MissingPermission")
     public Location getLocation() {
         try {
-            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
             // getting GPS status
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -155,7 +155,7 @@ public class GPSTracker extends Service implements LocationListener {
      */
 
     public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
         // Setting Dialog Title
         alertDialog.setTitle("GPS is settings");
@@ -167,7 +167,7 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
+                context.startActivity(intent);
             }
         });
 

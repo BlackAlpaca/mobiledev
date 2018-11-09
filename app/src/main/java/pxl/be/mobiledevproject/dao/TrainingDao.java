@@ -11,10 +11,6 @@ import java.util.List;
 
 import pxl.be.mobiledevproject.models.Training;
 
-/***
- * For more information abouts DAO's go to: https://developer.android.com/training/data-storage/room/accessing-data
- */
-
 @Dao
 public interface TrainingDao {
 
@@ -26,7 +22,6 @@ public interface TrainingDao {
 
     @Delete
     void delete(Training training);
-
 
     @Query("DELETE FROM training")
     void deleteAllTrainings();
