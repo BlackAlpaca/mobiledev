@@ -34,11 +34,11 @@ public class RequestHandler {
         trainingViewModel = ViewModelProviders.of(activity).get(TrainingViewModel.class);
         trainingViewModel.deleteAllTrainings();
 
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         requestQueue = Volley.newRequestQueue(context);
 
