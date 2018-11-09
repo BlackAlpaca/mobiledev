@@ -89,7 +89,8 @@ public class Training_management extends Fragment {
         trainingViewModel = ViewModelProviders.of(this).get(TrainingViewModel.class);
         trainingViewModel.getAllTrainings().observe(this, adapter::setTrainings);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            //drag&drop functionality
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
@@ -97,7 +98,13 @@ public class Training_management extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                int pos = viewHolder.getAdapterPosition();
+                trainingViewModel.delete(adapter.getTrainingAt(viewHolder.getAdapterPosition()));
+
+                Toast.makeText(getActivity(), "Training deleted", Toast.LENGTH_SHORT).show();
+
+
+
+                /*int pos = viewHolder.getAdapterPosition();
 
                 Training selected = adapter.getNoteAt(pos);
                 TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
@@ -123,9 +130,39 @@ public class Training_management extends Fragment {
                     Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
                     startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
                     startActivity(startChildActivityIntent, null);
-                }
+                }*/
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new TrainingAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Training training) {
+                TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
+                TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
+
+                String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", training.getNecessities(), training.getLocation());
+
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    adapter.notifyDataSetChanged();
+                    // In landscape
+                    fragmentDetails.setVisibility(View.VISIBLE);
+
+                    TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
+                    textView.setText(dataToSend);
+                } else {
+                    // In portrait
+                    adapter.notifyDataSetChanged();
+                    itemDetailNecessities.setVisibility(View.INVISIBLE);
+                    itemDetailLocation.setVisibility(View.INVISIBLE);
+
+                    Class destinationActivity = DetailActivity.class;
+                    Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
+                    startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
+                    startActivity(startChildActivityIntent, null);
+                }
+            }
+        });
     }
 
     @Override

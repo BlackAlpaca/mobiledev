@@ -15,6 +15,7 @@ import pxl.be.mobiledevproject.models.Training;
 
 public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingHolder> {
     private List<Training> trainings = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -45,7 +46,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         notifyDataSetChanged();
     }
 
-    public Training getNoteAt(int position) {
+    public Training getTrainingAt(int position) {
         return trainings.get(position);
     }
 
@@ -63,7 +64,25 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
             textViewLocation = itemView.findViewById(R.id.text_view_location);
             textViewDateTime = itemView.findViewById(R.id.text_view_datetime);
             textViewForAdults = itemView.findViewById(R.id.text_view_forAdults);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(trainings.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Training training);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 
 }
