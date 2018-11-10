@@ -98,11 +98,13 @@ public class Training_management extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                int pos = viewHolder.getAdapterPosition();
                 trainingViewModel.delete(adapter.getTrainingAt(viewHolder.getAdapterPosition()));
+                Training selected = adapter.getTrainingAt(pos);
 
                 Toast.makeText(getActivity(), "Training deleted", Toast.LENGTH_SHORT).show();
 
-
+                RequestHandler.deleteTraining(getContext(), selected.getId());
 
                 /*int pos = viewHolder.getAdapterPosition();
 
@@ -177,7 +179,7 @@ public class Training_management extends Fragment {
             String date = data.getStringExtra(AddTrainingActivity.EXTRA_DATE);
             boolean isAdult = Boolean.valueOf(data.getStringExtra(AddTrainingActivity.EXTRA_ISADULT));
 
-            Training training = new Training(date, necessities, location, title, isAdult);
+            Training training = new Training(0, date, necessities, location, title, isAdult);
             trainingViewModel.insert(training);
 
             RequestHandler.getTrainingsData(getActivity(), getActivity());

@@ -57,7 +57,7 @@ public class RequestHandler {
                     String isAdult = training.getString("adult");
 
                     trainingViewModel.insert(
-                            new Training(
+                            new Training(id,
                                     localDateTime,
                                     necessities,
                                     location,
@@ -74,11 +74,11 @@ public class RequestHandler {
 
 
     public static void postTrainingsData(Context context,
-                                         String title,
-                                         String necessities,
-                                         String location,
-                                         String date,
-                                         boolean isAdult) {
+                                           String title,
+                                           String necessities,
+                                           String location,
+                                           String date,
+                                           boolean isAdult) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = context.getString(R.string.postURL);
@@ -106,5 +106,22 @@ public class RequestHandler {
             }
         };
         requestQueue.add(postRequest);
+    }
+    public static void deleteTraining(Context context, int id) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        String url = context.getString(R.string.deleteUrl) + id;
+
+        StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, url,
+                response -> {
+                    // response
+                    Toast.makeText(context, "Training Deleted \n" + response, Toast.LENGTH_SHORT).show();
+                },
+                error -> {
+                    // error
+                    Toast.makeText(context, "Could not delete training" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+        );
+        requestQueue.add(deleteRequest);
     }
 }

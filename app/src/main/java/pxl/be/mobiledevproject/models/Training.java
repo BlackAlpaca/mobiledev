@@ -19,7 +19,7 @@ public class Training {
 
     private boolean isAdult;
 
-    public Training(String localDateTime,
+    public Training(int id, String localDateTime,
                     String necessities,
                     String location,
                     String title,
@@ -30,6 +30,7 @@ public class Training {
         this.location = location;
         this.title = title;
         this.isAdult = isAdult;
+        this.id = id;
     }
 
     public int getId() {
