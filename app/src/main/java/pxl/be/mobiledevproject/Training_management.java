@@ -105,64 +105,33 @@ public class Training_management extends Fragment {
                 Toast.makeText(getActivity(), "Training deleted", Toast.LENGTH_SHORT).show();
 
                 RequestHandler.deleteTraining(getContext(), selected.getId());
-
-                /*int pos = viewHolder.getAdapterPosition();
-
-                Training selected = adapter.getNoteAt(pos);
-                TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
-                TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
-
-                String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", selected.getNecessities(), selected.getLocation());
-
-                int orientation = getResources().getConfiguration().orientation;
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    adapter.notifyDataSetChanged();
-                    // In landscape
-                    fragmentDetails.setVisibility(View.VISIBLE);
-
-                    TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
-                    textView.setText(dataToSend);
-                } else {
-                    // In portrait
-                    adapter.notifyDataSetChanged();
-                    itemDetailNecessities.setVisibility(View.INVISIBLE);
-                    itemDetailLocation.setVisibility(View.INVISIBLE);
-
-                    Class destinationActivity = DetailActivity.class;
-                    Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
-                    startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
-                    startActivity(startChildActivityIntent, null);
-                }*/
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setOnItemClickListener(new TrainingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Training training) {
-                TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
-                TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
+        adapter.setOnItemClickListener(training -> {
+            TextView itemDetailNecessities = getActivity().findViewById(R.id.text_view_necessities);
+            TextView itemDetailLocation = getActivity().findViewById(R.id.text_view_location);
 
-                String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", training.getNecessities(), training.getLocation());
+            String dataToSend = String.format("Necessities: \n %s \n \n Location: %s", training.getNecessities(), training.getLocation());
 
-                int orientation = getResources().getConfiguration().orientation;
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    adapter.notifyDataSetChanged();
-                    // In landscape
-                    fragmentDetails.setVisibility(View.VISIBLE);
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                adapter.notifyDataSetChanged();
+                // In landscape
+                fragmentDetails.setVisibility(View.VISIBLE);
 
-                    TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
-                    textView.setText(dataToSend);
-                } else {
-                    // In portrait
-                    adapter.notifyDataSetChanged();
-                    itemDetailNecessities.setVisibility(View.INVISIBLE);
-                    itemDetailLocation.setVisibility(View.INVISIBLE);
+                TextView textView = getActivity().findViewById(R.id.necessitiesDetailActivity);
+                textView.setText(dataToSend);
+            } else {
+                // In portrait
+                adapter.notifyDataSetChanged();
+                itemDetailNecessities.setVisibility(View.INVISIBLE);
+                itemDetailLocation.setVisibility(View.INVISIBLE);
 
-                    Class destinationActivity = DetailActivity.class;
-                    Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
-                    startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
-                    startActivity(startChildActivityIntent, null);
-                }
+                Class destinationActivity = DetailActivity.class;
+                Intent startChildActivityIntent = new Intent(itemDetailNecessities.getContext(), destinationActivity);
+                startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, dataToSend);
+                startActivity(startChildActivityIntent, null);
             }
         });
     }
